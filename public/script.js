@@ -6,7 +6,6 @@ import { getDatabase, ref, set, push, onChildAdded } from 'https://www.gstatic.c
 const firebaseConfig = {
     apiKey: "AIzaSyCdhlAQGqagLho07r7sZ6a7M736lztnMyM",
     authDomain: "chat-de-conversas-1335c.firebaseapp.com",
-    databaseURL: "https://chat-de-conversas-1335c-default-rtdb.firebaseio.com/",
     projectId: "chat-de-conversas-1335c",
     storageBucket: "chat-de-conversas-1335c.appspot.com",
     messagingSenderId: "623884587287",
@@ -30,11 +29,8 @@ document.getElementById('sendButton').addEventListener('click', function() {
         set(newMessageRef, {
             message: message,
             timestamp: Date.now()
-        }).then(() => {
-            messageInput.value = ''; // Limpa o campo de entrada após o envio
-        }).catch((error) => {
-            console.error("Erro ao enviar a mensagem: ", error);
         });
+        messageInput.value = '';
     }
 });
 
@@ -46,8 +42,8 @@ onChildAdded(messagesRef, (snapshot) => {
 
 function displayMessage(message) {
     const messageElement = document.createElement('div');
-    messageElement.classList.add('message', 'received');
     messageElement.textContent = message;
+    messageElement.classList.add('message', 'received'); // Adiciona classe para estilizar
     document.getElementById('messages').appendChild(messageElement);
     document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
 }
