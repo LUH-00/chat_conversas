@@ -1,24 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat em Tempo Real</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js" type="module"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js" type="module"></script>
-    <script src="public/script.js" type="module" defer></script>
-    <link rel="stylesheet" href="public/styles.css">
-</head>
-<body>
-    <div class="container">
-        <div class="chat-window">
-            <div id="messages" class="messages"></div>
-            <div class="input-group">
-                <input type="text" id="messageInput" class="form-control" placeholder="Digite uma mensagem...">
-                <button id="sendButton" class="btn btn-success">Enviar</button>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PogeonTalk</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js" type="module"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.14.0/firebase-storage.js" type="module"></script>
+        <link rel="icon" href="img/logo.png" type="image/x-icon">
+        <script src="public/script.js" type="module" defer></script>
+        <link rel="stylesheet" href="public/styles.css">
+    </head>
+    <body>
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Lista de Usuários Ativos -->
+                <div class="col-md-3 bg-light p-3 border-end">
+                    <h4>Usuários Ativos</h4>
+                    <ul id="userList" class="list-group">
+                        <!-- Lista de usuários será preenchida dinamicamente -->
+                    </ul>
+                </div>
+
+                <!-- Área de Chat -->
+                <div class="col-md-9">
+                    <!-- Barra Superior -->
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <img src="img/logo.png" alt="Logo" height="40">
+                        <button id="profileButton" class="btn btn-light">
+                            <img id="profileIcon" src="profile-icon.png" alt="Profile Icon" height="40">
+                        </button>
+                    </div>
+
+                    <!-- Janela de Chat -->
+                    <div class="chat-window">
+                        <div id="messages" class="messages"></div>
+                        <div class="input-group">
+                            <input type="file" id="fileInput" class="form-control-file" style="display: none;">
+                            <button id="attachButton" class="btn btn-secondary">
+                                <i class="fas fa-paperclip"></i>
+                            </button>
+                            <input type="text" id="messageInput" class="form-control" placeholder="Digite uma mensagem...">
+                            <button id="sendButton" class="btn btn-success"><i class="fa-regular fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</body>
-</html>
+
+        <!-- Modal para Nome e Foto -->
+        <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="profileModalLabel">Perfil do Usuário</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="profileForm">
+                            <div class="mb-3">
+                                <label for="userName" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="userName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="userPhoto" class="form-label">Foto</label>
+                                <input type="file" class="form-control" id="userPhoto" accept="image/*">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+     
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    </body>
+    </html>
